@@ -2,12 +2,21 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 	"package-service/http/middlewares"
+	"package-service/http/validators"
 )
 
 func InitRouter() *gin.Engine {
 	r := gin.Default()
+
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("gtin", validators.Gtin)
+		v.RegisterValidation("sgtin", validators.Sgtin)
+		v.RegisterValidation("sscc", validators.Sscc)
+	}
 
 	r.Use(middlewares.CORS())
 
