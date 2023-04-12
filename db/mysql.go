@@ -4,6 +4,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"package-service/models"
 )
 
 var DB *gorm.DB
@@ -41,7 +42,7 @@ func Connect() error {
 		return err
 	}
 
-	if err := database.AutoMigrate(); err != nil {
+	if err := database.AutoMigrate(&models.Box{}, &models.Product{}, &models.Package{}); err != nil {
 		return err
 	}
 

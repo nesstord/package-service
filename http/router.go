@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	"net/http"
+	"package-service/http/controllers"
 	"package-service/http/middlewares"
 	"package-service/http/validators"
 )
@@ -31,6 +32,8 @@ func InitRouter() *gin.Engine {
 		api.GET("/test", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
 		})
+
+		api.POST("/aggregate", controllers.Aggregate)
 	}
 
 	return r
