@@ -5,7 +5,9 @@ import (
 	"regexp"
 )
 
+const SsccPattern = "\\d{18}"
+
 var Sscc validator.Func = func(fl validator.FieldLevel) bool {
-	result, _ := regexp.MatchString("\\d{18}", fl.Field().String())
+	result, _ := regexp.MatchString(SsccPattern, fl.Field().String())
 	return result
 }

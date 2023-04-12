@@ -5,7 +5,9 @@ import (
 	"regexp"
 )
 
+const GtinPattern = "\\d{14}"
+
 var Gtin validator.Func = func(fl validator.FieldLevel) bool {
-	result, _ := regexp.MatchString("\\d{14}", fl.Field().String())
+	result, _ := regexp.MatchString(GtinPattern, fl.Field().String())
 	return result
 }
