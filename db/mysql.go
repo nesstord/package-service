@@ -1,9 +1,11 @@
 package db
 
 import (
+	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"package-service/db/seeds"
 	"package-service/models"
 )
 
@@ -44,6 +46,12 @@ func Connect() error {
 
 	if err := database.AutoMigrate(&models.Box{}, &models.Product{}, &models.Package{}); err != nil {
 		return err
+	}
+
+	for _, seed := range seeds.All() {
+		if err := seed.Run(database); err != nil {
+			return fmt.Errorf("running seed '%s', failed with error: %s", seed.Name, err)
+		}
 	}
 
 	DB = database

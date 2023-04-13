@@ -7,6 +7,8 @@ import (
 
 const SgtinPattern = "\\d{14}[\\da-zA-Z]{13}"
 
+var SgtinRegexp = regexp.MustCompile(SgtinPattern)
+
 var Sgtin validator.Func = func(fl validator.FieldLevel) bool {
 	result, _ := regexp.MatchString(SgtinPattern, fl.Field().String())
 	return result

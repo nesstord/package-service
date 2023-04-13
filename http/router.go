@@ -33,7 +33,9 @@ func InitRouter() *gin.Engine {
 			c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
 		})
 
-		api.POST("/aggregate", controllers.Aggregate)
+		api.POST("/aggregate", controllers.BoxAggregate)
+		api.POST("/boxes", controllers.BoxGetBySgtins)
+		api.POST("/boxes/csv", controllers.BoxGetByGtin)
 	}
 
 	return r
