@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/plugin/prometheus"
 	"os"
 	"package-service/db/seeds"
 	"package-service/models"
@@ -39,6 +40,13 @@ func Connect() error {
 
 	dsn := dbUsername + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + dbName + "?charset=utf8mb4&parseTime=true"
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	database.Use(prometheus.New(prometheus.Config{
+		DBName:          dbName,
+		RefreshInterval: 15,
+		StartServer:     true,
+		HTTPServerPort:  8080,
+	}))
 
 	if err != nil {
 		return err
