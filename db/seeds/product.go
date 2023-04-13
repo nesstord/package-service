@@ -7,8 +7,7 @@ import (
 
 func CreateProducts(db *gorm.DB, products []models.Product) error {
 	for _, product := range products {
-		product := product
-		if err := db.FirstOrCreate(&product).Error; err != nil {
+		if err := db.Where("gtin = ?", product.Gtin).FirstOrCreate(&product).Error; err != nil {
 			return err
 		}
 	}
